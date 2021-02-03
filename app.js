@@ -3,19 +3,25 @@ ShowNotes();
 //if user add a note add it to the local storage
 let addBtn = document.getElementById("add_note").addEventListener("click", function (e) {
     let addTxt = document.getElementById("addTxt");
+    let addTitle = document.getElementById("addTitle");
     let Notes = localStorage.getItem("Notes")
     if (Notes == null) {
         NotesObj = [];
 
     }
     else {
-        NotesObj = JSON.parse(Notes);
+        notesObj = JSON.parse(Notes);
+    }
+    let myobj={
+      title:addTitle.value,
+      text:addTxt.value
 
     }
-    NotesObj.push(addTxt.value);
+    NotesObj.push(myobj);
     localStorage.setItem("Notes", JSON.stringify(NotesObj));
     ShowNotes();
     addTxt.value = " ";
+    addTitle.value='';
 
 })
 
@@ -37,8 +43,8 @@ function ShowNotes() {
         html +=
             `   <div class="noteCard my-2 mx-2 card" style="width:18rem;">
         <div class="card-body">
-           <h5 class="card-title">Note ${index + 1} </h5>
-           <p class="card-text"> ${element}</p>
+           <h5 class="card-title">${element.title} </h5>
+           <p class="card-text"> ${element.text}</p>
                <button id="${index}"onclick="deleteNote(this.id)"
             class="btn btn-primary">Delete</button>
             
